@@ -1,0 +1,99 @@
+/*
+ * Project.h
+ *
+ *  Created on: Jul 9, 2023
+ *      Author: VincentD'Agostino
+ */
+
+#ifndef PROJECT_H_
+#define PROJECT_H_
+
+#include <stdbool.h>
+
+#define TARGET_BOARD_RA6M3 5
+#define TARGET_BOARD_RA0E1 6
+#define TARGET_BOARD TARGET_BOARD_RA6M3
+
+
+#ifndef true
+#define true 1
+#endif
+
+#ifndef false
+#define false 0
+#endif
+
+
+#define FW_REV_HI "00"
+#define FW_REV_LOW "03"
+#define FW_REV_REL "16"
+
+#define FW_REV__BUILT "FW v" FW_REV_HI "." FW_REV_LOW "." FW_REV_REL "\r\n"
+#define FW_REV_PACKET_BUILT "$f" FW_REV_HI "." FW_REV_LOW "." FW_REV_REL "\n\r\n"
+
+#define DEFAULT_ON_TIME 40
+#define DEFAULT_OFF_TIME 40
+
+#define MAX_TIME 80
+#define MIN_TIME 4
+
+#define SENSOR_HISTORY_LENGTH 8
+
+#if TARGET_BOARD == TARGET_BOARD_RA6M3
+#define BOARD_MOUNTED_RED_LED R_PORT1->PODR_b.PODR0
+#define BOARD_MOUNTED_GREEN_LED R_PORT4->PODR_b.PODR0
+#define BOARD_MOUNTED_BLUE_LED R_PORT4->PODR_b.PODR3
+
+#define SHIELD_MOUNTED_LED1 R_PORT5->PODR_b.PODR5 // D3
+#define SHIELD_MOUNTED_LED2 R_PORT9->PODR_b.PODR7 // D5
+#define SHIELD_MOUNTED_LED3 R_PORT5->PODR_b.PODR4 // D6
+#define SHIELD_MOUNTED_HEARTBEAT_LED R_PORT0->PODR_b.PODR14 // A5
+
+#define  BOARD_MOUNTED_SWITCH_1 R_PORT0->PIDR_b.PIDR9
+#define  BOARD_MOUNTED_SWITCH_2 R_PORT0->PIDR_b.PIDR8
+
+#define SHIELD_MOUNTED_SW1 R_PORT5->PIDR_b.PIDR6 // D2
+#define SHIELD_MOUNTED_SW2 R_PORT9->PIDR_b.PIDR8 // D4
+
+#define SENSOR_1_SS R_PORT4->PODR_b.PODR15 // D9 (r1.xx schematic label wrong)
+#define SENSOR_2_SS R_PORT4->PODR_b.PODR14 // D10 (r1.xx schematic label wrong)
+#define SENSOR_3_SS R_PORT6->PODR_b.PODR11 // D8
+#define SENSOR_BAROMETER_SS R_PORT5->PODR_b.PODR8 // A4
+
+#elif TARGET_BOARD == TARGET_BOARD_RA0E1
+#define BLUE_LED_INDEX 0
+#define SHIELD_MOUNTED_LED1 R_PORT2->PODR_b.PODR1 // D5
+#define SHIELD_MOUNTED_LED2 R_PORT2->PODR_b.PODR1 // D6
+#define SHIELD_MOUNTED_LED3 R_PORT1->PODR_b.PODR2 // D7
+#define SHIELD_MOUNTED_HEARTBEAT_LED R_PORT0->PODR_b.PODR14 // A5
+
+#define  BOARD_MOUNTED_SWITCH R_PORT2->PIDR_b.PIDR0
+#define SHIELD_MOUNTED_SW1
+#define SHIELD_MOUNTED_SW2
+
+#define SENSOR_1_SS R_PORT1->PODR_b.PODR10
+#define SENSOR_2_SS R_PORT1->PODR_b.PODR12
+#define SENSOR_3_SS R_PORT1->PODR_b.PODR9
+#define SENSOR_BAROMETER_SS R_PORT0->PODR_b.PODR8
+
+
+#endif
+
+#define SS_ASSERTED 0
+#define SS_DEASSERTED 1
+
+#define DEFAULT_SER_NO "SNxxxxxx"
+#define DEFAULT_MODEL_NAME "APC Sensor Shield\r\n"
+#define DEFAULT_REF_DATA "SNxxxxxx;Acme Comms 2000"
+
+#define SER_NO_LENGTH 12
+#define MODEL_NAME_LENGTH 25
+#define REF_DATA_LENGTH 32
+
+enum VEPROM_IDS {
+    ON_TIME_ID = 1,
+    OFF_TIME_ID,
+    BLUE_LED_FEATURE_ID
+};
+
+#endif /* PROJECT_H_ */
